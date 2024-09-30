@@ -76,7 +76,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         with:
           version: latest
-          args: release --clean --snapshot --split
+          args: release --clean --snapshot
         env:
           GGOOS: ${{ matrix.GOOS }}
           GGOARCH: ${{ matrix.GOARCH }}
