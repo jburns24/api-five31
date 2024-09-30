@@ -1,0 +1,68 @@
+---
+# This is an example .goreleaser.yml file with some sensible defaults.
+# Make sure to check the documentation at https://goreleaser.com
+# TODO: update this
+# before:
+#   hooks:
+#     - go generate ./...
+#     - make
+builds:
+  - dir: ./
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: darwin
+        goarch: arm
+
+dockers:
+  - goos: linux
+    goarch: amd64
+    image_templates:
+      # - ghcr.io/jburns24/api-five31:{{ .Version }}-amd64
+      - ghcr.io/jburns24/api-five31:latest-amd64
+    use: buildx
+    build_flag_templates:
+      - --pull
+      - --platform=linux/amd64
+      - --label=org.opencontainers.image.created={{.Date}}
+      - --label=org.opencontainers.image.name={{.ProjectName}}
+      - --label=org.opencontainers.image.revision={{.FullCommit}}
+      - --label=org.opencontainers.image.version={{.Version}}
+      - --label=org.opencontainers.image.source={{.GitURL}}
+  - goos: linux
+    goarch: arm64
+    image_templates:
+      # - ghcr.io/jburns24/api-five31:{{ .Version }}-arm64
+      - ghcr.io/jburns24/api-five31:latest-arm64
+    use: buildx
+    build_flag_templates:
+      - --pull
+      - --platform=linux/arm64
+      - --label=org.opencontainers.image.created={{.Date}}
+      - --label=org.opencontainers.image.name={{.ProjectName}}
+      - --label=org.opencontainers.image.revision={{.FullCommit}}
+      - --label=org.opencontainers.image.version={{.Version}}
+      - --label=org.opencontainers.image.source={{.GitURL}}
+
+checksum:
+  name_template: checksums.txt
+snapshot:
+  name_template: '{{ incpatch .Version }}-next'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+# The lines beneath this are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/use them.
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
