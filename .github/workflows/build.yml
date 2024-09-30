@@ -17,4 +17,30 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v4
+
+      - name: setup qemu
+        uses: docker/setup-qemu-action@3
+
+      - name: setup docker
+        user: docker/setup-buildx-action@v3
+
+      - name: login to docker
+        uses: docker/login-action
+        with:
+          registry: ghcr.io
+          user: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: setup go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: setup goreleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          version: latest
+          arg: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
