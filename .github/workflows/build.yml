@@ -2,22 +2,22 @@ name: build and tag
 
 on:
   pull_request:
-    branches: [main]
-    # paths:
-    #   - '**/Dockerfile'
-    #   - '**/.dockerignore'
-    #   - .github/**
-    #   - '**.go'
-    #   - '**.mod'
-    #   - '**.sum'
-    #   - config/**
-    #   - '**/Makefile*'
-    #   - '**/documentation.md'
-    #   - .golangci.yaml
-    #   - .goreleaser.yaml
+    branches: [master]
+    paths:
+      - '**/Dockerfile'
+      - '**/.dockerignore'
+      - .github/**
+      - '**.go'
+      - '**.mod'
+      - '**.sum'
+      - config/**
+      - '**/Makefile*'
+      - '**/documentation.md'
+      - .golangci.yaml
+      - .goreleaser.yaml
 
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
