@@ -22,7 +22,7 @@ jobs:
         uses: docker/setup-qemu-action@3
 
       - name: setup docker
-        user: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3
 
       - name: login to docker
         uses: docker/login-action
